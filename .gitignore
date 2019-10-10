@@ -1,0 +1,6 @@
+/jcstress-results*.gz
+/results
+/target
+/.idea
+/*.iml
+/*.java
