@@ -8,8 +8,8 @@ import org.openjdk.jcstress.annotations.State;
 import org.openjdk.jcstress.infra.results.II_Result;
 
 @JCStressTest
-@Outcome(id = {"0, 0", "0, 1", "0, 2", "1, 2"}, expect = Expect.ACCEPTABLE, desc = "Normal outcome")
-@Outcome(id = {"1, 1"}, expect = Expect.ACCEPTABLE_INTERESTING, desc = "Abnormal outcome")
+@Outcome(id = {"0, 0", "0, 1", "1, 1"}, expect = Expect.ACCEPTABLE, desc = "Normal outcome")
+@Outcome(id = {"1, 0"}, expect = Expect.FORBIDDEN, desc = "Abnormal outcome")
 @State
 public class VolatileXReorder8232ReleaseNA {
 
@@ -18,7 +18,7 @@ public class VolatileXReorder8232ReleaseNA {
 
     @Actor
     public void process0(II_Result r) {
-        // can reorder? YES
+        // can reorder? NO
         x = 1;
         y = 1;
     }
@@ -26,7 +26,9 @@ public class VolatileXReorder8232ReleaseNA {
     @Actor
     public void process1(II_Result r) {
         r.r1 = y;
-        r.r2 = x + r.r1;
+        synchronized (this) {
+            r.r2 = x;
+        }
     }
 
 }

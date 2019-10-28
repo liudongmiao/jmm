@@ -18,14 +18,12 @@ public class VolatileXReorder8232 {
 
     @Actor
     public void process0(II_Result r) {
-        // can reorder? YES
         x = 1;
         y = 1;
     }
 
     @Actor
     public void process1(II_Result r) {
-        // can reorder? YES
         r.r1 = y;
         r.r2 = x;
     }

@@ -19,7 +19,9 @@ public class VolatileXReorder8232NaAcquire {
     @Actor
     public void process0(II_Result r) {
         x = 1;
-        y = x;
+        synchronized (this) {
+            y = 1;
+        }
     }
 
     @Actor
